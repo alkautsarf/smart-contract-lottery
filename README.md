@@ -1,6 +1,6 @@
-# Raffle Contract
+# Smart Contract Lottery
 
-This is a smart contract written in Solidity for conducting a raffle. This contract utilize ChainLinkVRFv2 for generating random numbers and ChainLink Automation for picking the winner of the raffle.
+This is a smart contract written in Solidity for conducting an on-chain lottery. This contract utilize ChainLinkVRFv2 for generating random numbers and ChainLink Automation for picking the winner of the raffle.
 
 ## Features
 
