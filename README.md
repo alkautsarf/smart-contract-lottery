@@ -1,12 +1,12 @@
 # Raffle Contract
 
-This is a smart contract written in Solidity for conducting a raffle. 
+This is a smart contract written in Solidity for conducting a raffle. This contract utilize ChainLinkVRFv2 for generating random numbers and ChainLink Automation for picking the winner of the raffle.
 
 ## Features
 
-- Participants can buy tickets for the raffle by sending Ether to the contract.
+- Participants can enter the raffle by calling ```enterRaffle()``` with minimum of deposit that stated in the contract.
 - The contract randomly selects a winner at the end of the raffle.
-- The winner receives the prize pool, which is the total amount of Ether collected from ticket sales.
+- The winner receives the prize pool, which is the total Ether collected from all participants.
 
 ## Usage
 
@@ -20,14 +20,34 @@ This is a smart contract written in Solidity for conducting a raffle.
 
 The contract consists of the following main functions:
 
-- `buyTicket()`: Allows participants to buy tickets for the raffle.
-- `endRaffle()`: Ends the raffle and selects a winner.
-- `claimPrize()`: Allows the winner to claim the prize.
+- User only need to interact with this function:
+    - `enterRaffle()`: Allows participants to participate in the raffle.
 
-## Testing
+- These functions are meant to be called using ChainLink Automation:
+    - `checkUpkeep()`: Checking the current state of raffle.
+    - `performUpkeep()`: Perform random number generation using ChainLinkVRF.
+    - `fulfillRandomWords()`: Pick the winner and reset the current state of the contract.
 
-Unit tests for the contract are available in the `Raffle.test.js` file.
 
-## License
+## Commands
 
-This project is licensed under the [MIT License](LICENSE).
+- Testing Local
+    
+    ```
+    make test / forge test
+    ```
+- Testing Sepolia
+    
+    ```
+    forge test --rpc-url $SEPOLIA_RPC_URL
+    ```
+- Deploy Contract Local
+
+    ```
+    forge script script/DeployRaffle.s.sol:DeployRaffle --rpc-url $(LOCAL_HOST) --account defaultKey --sender $(MAIN_ADDRESS) --broadcast
+    ```
+- Deploy Contract Sepolia
+
+    ```
+    make deploy
+    ```
